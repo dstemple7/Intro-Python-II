@@ -1,14 +1,23 @@
 from room import Room
 from player import Player
+from item import Item
+
+# Declare all the items
+
+item = {
+'bat': Item('bat', 'wilson wood'),
+'ball': Item('ball', 'bouncy ball'),
+'knife': Item('knife', 'sharp')
+}
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     """North of you, the cave mount beckons""", """bat, ball"""),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", ['knife']),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
@@ -21,7 +30,6 @@ to north. The smell of gold permeates the air."""),
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
-
 
 # Link rooms together
 
@@ -40,9 +48,11 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
-player = Player('outside')
+player = Player('outside', None)
 print(room[player.location].name)
 print(room[player.location].description)
+print(room[player.location].item)
+
 
 def goNorth():
     room[player.location] = room[player.location].n_to
@@ -50,6 +60,8 @@ def goNorth():
         print("\n")
         print(room[player.location].name)
         print(room[player.location].description)
+        print(room[player.location].item)
+
 
 def goEast():
     room[player.location] = room[player.location].e_to
@@ -57,6 +69,8 @@ def goEast():
         print("\n")
         print(room[player.location].name)
         print(room[player.location].description)
+        print(room[player.location].item)
+
 
 def goSouth():
     room[player.location] = room[player.location].s_to
@@ -64,6 +78,8 @@ def goSouth():
         print("\n")
         print(room[player.location].name)
         print(room[player.location].description)
+        print(room[player.location].item)
+
 
 def goWest():
     room[player.location] = room[player.location].w_to
@@ -71,6 +87,7 @@ def goWest():
         print("\n")
         print(room[player.location].name)
         print(room[player.location].description)
+        print(room[player.location].item)
 
 # print(player)
 
@@ -106,12 +123,15 @@ while selection != None:
             goSouth()
 
         elif selection == 'w':
-           goWest()
+            goWest()
+        
+        elif selection == 'take bat':
+            player.pickupItem('bat')
 
         else:
             print("\n")
-            print("Please input only the letter n, e, s, or w of the cardinal direction you'd like to move or type q to exit the game ")
-    
+            print("Please input only the letter n, e, s, or w of the cardinal direction you'd like to move, input to take or drop an item with it's name, or type q to exit the game ")
+
     except AttributeError:
         print("\n")
         print("Sorry, you've hit a wall, try another direction")
@@ -119,7 +139,7 @@ while selection != None:
 # Print an error message if the movement isn't allowed.
 #
 # branch table
-# 
+#
 # create a dictionary with n/s/e/w as keys and then make key equal to whatever function
 # dic[selection]()
 # "e": goEast
