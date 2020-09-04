@@ -1,11 +1,23 @@
 from room import Room
 from player import Player
+from item import Item
+
+# Declare all the items
+# bat = Item('bat', 'wilson wood')
+# ball = Item('ball', 'bouncy ball')
+# knife = Item('knife', 'sharp')
+
+# items = {
+#      'bat': Item('bat', 'wilson wood'),
+#      'ball': Item('ball', 'bouncy ball'),
+#      'knife': Item('knife', 'sharp')
+#  }
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     """North of you, the cave mount beckons""", [Item("bat", "wilson wood"), Item("ball", "bouncy ball")]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -21,7 +33,6 @@ to north. The smell of gold permeates the air."""),
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
-
 
 # Link rooms together
 
@@ -43,6 +54,8 @@ room['treasure'].s_to = room['narrow']
 player = Player('outside')
 print(room[player.location].name)
 print(room[player.location].description)
+print(room[player.location].items)
+
 
 def goNorth():
     room[player.location] = room[player.location].n_to
@@ -50,6 +63,8 @@ def goNorth():
         print("\n")
         print(room[player.location].name)
         print(room[player.location].description)
+        print(room[player.location].items)
+
 
 def goEast():
     room[player.location] = room[player.location].e_to
@@ -57,6 +72,8 @@ def goEast():
         print("\n")
         print(room[player.location].name)
         print(room[player.location].description)
+        print(room[player.location].items)
+
 
 def goSouth():
     room[player.location] = room[player.location].s_to
@@ -64,6 +81,8 @@ def goSouth():
         print("\n")
         print(room[player.location].name)
         print(room[player.location].description)
+        print(room[player.location].items)
+
 
 def goWest():
     room[player.location] = room[player.location].w_to
@@ -71,6 +90,18 @@ def goWest():
         print("\n")
         print(room[player.location].name)
         print(room[player.location].description)
+        print(room[player.location].items)
+
+
+# def pickupItem():
+#     # check if item exists in the room
+#     # append item to self.items list
+#     player.items.append(player.location.items[0])
+    # remove it from the current room inventory
+    # self.location.items.pop(item)
+
+# def pickupItem0():
+#     player.items.append(room[player.location].items[0])
 
 # print(player)
 
@@ -106,12 +137,36 @@ while selection != None:
             goSouth()
 
         elif selection == 'w':
-           goWest()
+            goWest()
+
+        elif selection == '1':
+            player.pickupItem(room[player.location].items[0].name,
+                              room[player.location].items[0].description)
+            print("\n")
+            print("Congrats, you picked up " + player.items[0].name)
+
+        elif selection == '2':
+            player.dropItem()
+            print("\n")
+            print("Bye bye...you dropped " +
+                  room[player.location].items[0].name)
+
+        elif selection == '3':
+            player.pickupItem(room[player.location].items[1].name,
+                              room[player.location].items[1].description)
+            print("\n")
+            print("Congrats, you picked up " + player.items[1].name)
+
+        elif selection == '4':
+            player.dropItem()
+            print("\n")
+            print("Bye bye...you dropped " +
+                  room[player.location].items[1].name)
 
         else:
             print("\n")
-            print("Please input only the letter n, e, s, or w of the cardinal direction you'd like to move or type q to exit the game ")
-    
+            print("Please input only the letter n, e, s, or w of the cardinal direction you'd like to move, input to take or drop an item with it's name, or type q to exit the game ")
+
     except AttributeError:
         print("\n")
         print("Sorry, you've hit a wall, try another direction")
@@ -119,7 +174,7 @@ while selection != None:
 # Print an error message if the movement isn't allowed.
 #
 # branch table
-# 
+#
 # create a dictionary with n/s/e/w as keys and then make key equal to whatever function
 # dic[selection]()
 # "e": goEast
