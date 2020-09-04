@@ -3,21 +3,24 @@ from player import Player
 from item import Item
 
 # Declare all the items
+# bat = Item('bat', 'wilson wood')
+# ball = Item('ball', 'bouncy ball')
+# knife = Item('knife', 'sharp')
 
-item = {
-'bat': Item('bat', 'wilson wood'),
-'ball': Item('ball', 'bouncy ball'),
-'knife': Item('knife', 'sharp')
-}
+# items = {
+#      'bat': Item('bat', 'wilson wood'),
+#      'ball': Item('ball', 'bouncy ball'),
+#      'knife': Item('knife', 'sharp')
+#  }
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     """North of you, the cave mount beckons""", """bat, ball"""),
+                     """North of you, the cave mount beckons""", [Item("bat", "wilson wood"), Item("ball", "bouncy ball")]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east.""", ['knife']),
+passages run north and east."""),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
@@ -48,10 +51,10 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
-player = Player('outside', None)
+player = Player('outside')
 print(room[player.location].name)
 print(room[player.location].description)
-print(room[player.location].item)
+print(room[player.location].items)
 
 
 def goNorth():
@@ -60,7 +63,7 @@ def goNorth():
         print("\n")
         print(room[player.location].name)
         print(room[player.location].description)
-        print(room[player.location].item)
+        print(room[player.location].items)
 
 
 def goEast():
@@ -69,7 +72,7 @@ def goEast():
         print("\n")
         print(room[player.location].name)
         print(room[player.location].description)
-        print(room[player.location].item)
+        print(room[player.location].items)
 
 
 def goSouth():
@@ -78,7 +81,7 @@ def goSouth():
         print("\n")
         print(room[player.location].name)
         print(room[player.location].description)
-        print(room[player.location].item)
+        print(room[player.location].items)
 
 
 def goWest():
@@ -87,7 +90,18 @@ def goWest():
         print("\n")
         print(room[player.location].name)
         print(room[player.location].description)
-        print(room[player.location].item)
+        print(room[player.location].items)
+
+
+# def pickupItem():
+#     # check if item exists in the room
+#     # append item to self.items list
+#     player.items.append(player.location.items[0])
+    # remove it from the current room inventory
+    # self.location.items.pop(item)
+
+# def pickupItem0():
+#     player.items.append(room[player.location].items[0])
 
 # print(player)
 
@@ -124,9 +138,30 @@ while selection != None:
 
         elif selection == 'w':
             goWest()
-        
-        elif selection == 'take bat':
-            player.pickupItem('bat')
+
+        elif selection == '1':
+            player.pickupItem(room[player.location].items[0].name,
+                              room[player.location].items[0].description)
+            print("\n")
+            print("Congrats, you picked up " + player.items[0].name)
+
+        elif selection == '2':
+            player.dropItem()
+            print("\n")
+            print("Bye bye...you dropped " +
+                  room[player.location].items[0].name)
+
+        elif selection == '3':
+            player.pickupItem(room[player.location].items[1].name,
+                              room[player.location].items[1].description)
+            print("\n")
+            print("Congrats, you picked up " + player.items[1].name)
+
+        elif selection == '4':
+            player.dropItem()
+            print("\n")
+            print("Bye bye...you dropped " +
+                  room[player.location].items[1].name)
 
         else:
             print("\n")

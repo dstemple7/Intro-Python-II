@@ -4,19 +4,21 @@
 from item import Item
 
 class Player:
-  def __init__(self, location, item=[]):
+  def __init__(self, location):
     self.location = location
-    self.item = item
+    self.items = []
 
-  def pickupItem(self, itemName):
+  def pickupItem(self, item_name, item_description):
     # check if item exists in the room
     # append item to self.items list
-    self.item.append(itemName)
+    self.items.append(Item(item_name, item_description))
+    self.location.items.remove(Item(item_name, item_description))
     # remove it from the current room inventory
-    self.location.item.pop(itemName)
+    # self.location.items.pop(item)
 
-  def dropItem(self, itemName):
-    pass
+  def dropItem(self):
+    self.items.remove(self.items[0])
+    self.location.items.append(self.items[0])
     # check if item exists in the player's inventory
     # append item to room items list
     # remove it from the players inventory

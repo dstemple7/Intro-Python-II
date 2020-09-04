@@ -1,11 +1,11 @@
 # Implement a class to hold room information. This should have name and
 # description attributes.
 
-class Room():
-    def __init__(self, name, description, item=[]):
+class Room:
+    def __init__(self, name, description, items=[]):
         self.name = name
         self.description = description
-        self.item = item
+        self.items = items
     
     # need a method to be able to add an item to the room
     def addItem(self, itemName):
@@ -16,4 +16,4 @@ class Room():
         pass
 
     def __str__(self):
-        return f"room {self.name} which is described as: {self.description} and has the following items available: {self.item}"
+        return f"room {self.name} which is described as: {self.description} and has the following items available: {self.items}"
